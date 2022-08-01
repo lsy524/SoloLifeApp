@@ -29,17 +29,21 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.emailArea.text.toString()
             val password = binding.passwordArea.text.toString()
 
+            // 이메일을 입력하지 않을 경우 실행 
             if(email.isEmpty()) {
                 Toast.makeText(this, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show()
                 isGoToLogin = false
-            } else if(password.isEmpty()){
+
+            } else if(password.isEmpty()){ // 비밀번호를 입력하지 않을 경우 실행 
                 Toast.makeText(this, "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 isGoToLogin = false
             }
 
+            // 이메일, 비밀번호를 둘 다 입력하고 호출되는 코드
             if(isGoToLogin) {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
+                        // 이메일, 비밀번호가 데이터베이스에 존재하면 실행
                         if (task.isSuccessful) {
                             Toast.makeText(this, "${auth.currentUser?.email}님 환영합니다.", Toast.LENGTH_SHORT).show()
 
@@ -48,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
 
-                        } else {
+                        } else { // 존재하지 않을 경우 실행
                             Toast.makeText(this, "이메일 또는 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
 
                         }

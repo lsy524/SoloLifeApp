@@ -32,16 +32,19 @@ class IntroActivity : AppCompatActivity() {
 
     private fun onClick(v: View) {
         when(v.id) {
+            // 로그인 화면으로 이동하는 코드 
             R.id.loginBtn -> binding.loginBtn.setOnClickListener {
                 startActivity(Intent(this, LoginActivity::class.java))
             }
-
+            // 회원가입 화면으로 이동하는 코드 
             R.id.joinBtn -> binding.joinBtn.setOnClickListener {
                 startActivity(Intent(this, JoinActivity::class.java))
             }
+            // 비회원 로그인 시 실행되는 코드 
             R.id.noAccountBtn -> binding.noAccountBtn.setOnClickListener {
                 auth.signInAnonymously()
                     .addOnCompleteListener(this) { task ->
+                        // 비회원 로그인 성공 
                         if (task.isSuccessful) {
                             Toast.makeText(this, "비회원으로 로그인되었습니다.", Toast.LENGTH_SHORT).show()
 
@@ -50,6 +53,7 @@ class IntroActivity : AppCompatActivity() {
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
 
+                            // 비회원 로그인 실패
                         } else {
                             Toast.makeText(this, "비회원으로 로그인 실패하였습니다.", Toast.LENGTH_SHORT).show()
                         }
