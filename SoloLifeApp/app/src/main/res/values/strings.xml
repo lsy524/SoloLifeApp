@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">SoloLifeApp</string>
+
     <string name="login_name">로그인</string>
     <string name="sign_name">회원가입</string>
     <string name="no_sign_name">비회원 가입</string>
+
+    <string name="email_hint">이메일</string>
+    <string name="pwd_hint">비밀번호</string>
+    <string name="pwdCheck_hint">비밀번호 재확인</string>
+
+    <string name="start_login">로그인 하기</string>
+    <string name="start_join">회원가입 하기</string>
+
 </resources>
