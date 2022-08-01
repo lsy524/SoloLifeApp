@@ -56,7 +56,12 @@ class JoinActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Toast.makeText(this, "회원가입에 성공하셨습니다.\n로그인 후 이용해주세요.", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, LoginActivity::class.java))
+
+                        val intent = Intent(this, LoginActivity::class.java)
+                        // 회원가입이 끝난 후 뒤로 가기 버튼 클릭 시 회원가입 화면으로 돌아가지 않게 하는 코드
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+
                     } else {
                         Toast.makeText(this, "회원가입에 실패하셨습니다. ", Toast.LENGTH_SHORT).show()
 
