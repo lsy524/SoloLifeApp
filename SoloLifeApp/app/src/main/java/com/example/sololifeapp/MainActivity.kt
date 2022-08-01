@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-        // Logout
+//         Logout
 //        binding.logoutBtn.setOnClickListener {
 //            auth.signOut()
 //            Toast.makeText(this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
