@@ -63,15 +63,16 @@ class ContentListActivity : AppCompatActivity() {
         // rv.layoutManager = LinearLayoutManager(this) // 한줄에 하나씩 세로로 출력
         rv.layoutManager = GridLayoutManager(this, 2) // 한줄에 입력한 갯수 만큼 가로에 배치하고 전체 세로로 출력
 
-        rvAdapter.itemClick = object : ContentRVAdapter.ItemClick{
-            override fun onClick(view: View, position: Int) {
-                val intent = Intent(this@ContentListActivity, ContentShowActivity::class.java)
-
-                intent.putExtra("url", items[position].webUrl)
-                startActivity(intent)
-            }
-
-        }
+        // 아이템 클릭 방법 1
+//        rvAdapter.itemClick = object : ContentRVAdapter.ItemClick{
+//            override fun onClick(view: View, position: Int) {
+//                val intent = Intent(this@ContentListActivity, ContentShowActivity::class.java)
+//
+//                intent.putExtra("url", items[position].webUrl)
+//                startActivity(intent)
+//            }
+//
+//        }
 
 
     }

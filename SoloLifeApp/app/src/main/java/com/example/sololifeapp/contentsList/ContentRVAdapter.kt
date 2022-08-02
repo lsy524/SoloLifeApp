@@ -1,11 +1,13 @@
 package com.example.sololifeapp.contentsList
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -13,11 +15,12 @@ import com.example.sololifeapp.R
 
 class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>(){
 
-    interface ItemClick {
-        fun onClick(view: View, position: Int)
-    }
-
-    var itemClick: ItemClick? = null
+    // 아이템 클릭 방법 1
+//    interface ItemClick {
+//        fun onClick(view: View, position: Int)
+//    }
+//
+//    var itemClick: ItemClick? = null
 
     // 각각의 아이템 하나 씩 가져옴 하나의 레이아웃으로 만들어줌
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentRVAdapter.ViewHolder {
@@ -30,11 +33,12 @@ class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context)
     // 아이템들을 ViewHolder 메서드에서 아이템들을 하나 하나 씩 넣을 수 있게 연결
     override fun onBindViewHolder(holder: ContentRVAdapter.ViewHolder, position: Int) {
 
-        if(itemClick != null) {
-            holder.itemView.setOnClickListener{ v ->
-                itemClick?.onClick(v, position)
-            }
-        }
+        // 아이템 클릭 방법 2
+//        if(itemClick != null) {
+//            holder.itemView.setOnClickListener{ v ->
+//                itemClick?.onClick(v, position)
+//            }
+//        }
         holder.bindItem(items[position])
     }
 
@@ -45,6 +49,14 @@ class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context)
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItem(item: ContentModel){
+
+            itemView.setOnClickListener{
+                Toast.makeText(context, item.title, Toast.LENGTH_SHORT).show()
+                val intent = Intent(context, ContentListActivity::class.java)
+                intent.putExtra("url", item.webUrl)
+                itemView.context.startActivity(intent)
+
+            }
 
             val contentTitle = itemView.findViewById<TextView>(R.id.textArea)
             val imageUrl = itemView.findViewById<ImageView>(R.id.imageArea)
