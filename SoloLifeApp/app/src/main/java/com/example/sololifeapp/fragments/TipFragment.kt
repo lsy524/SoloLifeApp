@@ -30,6 +30,7 @@ class TipFragment : Fragment() {
         onClick(binding.talkTap)
         onClick(binding.bookmarkTap)
         onClick(binding.storeTap)
+        onClick(binding.category1)
 
         return binding.root
     }

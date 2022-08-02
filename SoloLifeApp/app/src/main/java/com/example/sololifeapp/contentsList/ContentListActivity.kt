@@ -23,7 +23,7 @@ class ContentListActivity : AppCompatActivity() {
         val rvAdapter = ContentRVAdapter(items)
         rv.adapter = rvAdapter
 
-        rv.layoutManager = LinearLayoutManager(this) // 기본적으로 한줄에 하나씩 세로로 출력
-
+        // rv.layoutManager = LinearLayoutManager(this) // 한줄에 하나씩 세로로 출력
+        rv.layoutManager = GridLayoutManager(this, 2) // 한줄에 입력한 갯수 만큼 가로에 배치하고 전체 세로로 출력  
     }
 }
