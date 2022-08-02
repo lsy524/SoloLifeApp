@@ -32,6 +32,7 @@ class TipFragment : Fragment() {
         onClick(binding.storeTap)
         onClick(binding.category1)
         onClick(binding.category2)
+        onClick(binding.category7)
 
         return binding.root
     }
@@ -51,6 +52,11 @@ class TipFragment : Fragment() {
             R.id.category2 -> binding.category2.setOnClickListener {
                 val intent = Intent(context, ContentListActivity::class.java)
                 intent.putExtra("category", "category2")
+                startActivity(intent)
+            }
+            R.id.category7 -> binding.category7.setOnClickListener {
+                val intent = Intent(context, ContentListActivity::class.java)
+                intent.putExtra("category","category7")
                 startActivity(intent)
             }
         }
