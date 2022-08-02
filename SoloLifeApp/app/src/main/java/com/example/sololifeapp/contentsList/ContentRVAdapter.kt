@@ -2,6 +2,7 @@ package com.example.sololifeapp.contentsList
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 import com.example.sololifeapp.R
+import com.example.sololifeapp.utils.FBAuth
+import com.example.sololifeapp.utils.FBRef
 
 class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context, val keyList: ArrayList<String>) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>(){
 
@@ -39,7 +42,7 @@ class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context,
 //                itemClick?.onClick(v, position)
 //            }
 //        }
-        holder.bindItem(items[position])
+        holder.bindItem(items[position], keyList[position])
     }
 
     // 아이템의 개수가 몇개인지
@@ -48,7 +51,7 @@ class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context,
     // itemView = content_rv_item
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindItem(item: ContentModel){
+        fun bindItem(item: ContentModel, key : String){
 
             itemView.setOnClickListener{
                 val intent = Intent(context, ContentListActivity::class.java)
@@ -62,8 +65,10 @@ class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context,
             val bookmarkArea = itemView.findViewById<ImageView>(R.id.bookmarkArea)
 
             bookmarkArea.setOnClickListener{
+                Log.d("로그", FBAuth.getUid())
+                Toast.makeText(context, key, Toast.LENGTH_SHORT).show()
 
-                Toast.makeText(context, keyList.toString(), Toast.LENGTH_SHORT).show()
+                FBRef.bookmarkRef.child(FBAuth.getUid()).child(key).setValue("Good")
             }
             contentTitle.text = item.title
 
