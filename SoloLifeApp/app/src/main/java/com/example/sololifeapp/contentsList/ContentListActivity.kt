@@ -26,7 +26,9 @@ class ContentListActivity : AppCompatActivity() {
 
 
         val items = ArrayList<ContentModel>()
-        val rvAdapter = ContentRVAdapter(items, baseContext)
+        val itemKeyList = ArrayList<String>()
+
+        val rvAdapter = ContentRVAdapter(items, baseContext, itemKeyList)
 
         val database = Firebase.database
 
@@ -42,8 +44,10 @@ class ContentListActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(dataModel in dataSnapshot.children) {
                     Log.d("ContentListActivity", dataModel.toString())
+                    Log.d("ContentListActivity", dataModel.key.toString())
                     val item = dataModel.getValue(ContentModel::class.java) // dataModel 을 ContentModel 형식으로 받겠다는 의미
                     items.add(item!!)
+                    itemKeyList.add(dataModel.key.toString())
                 }
                 rvAdapter.notifyDataSetChanged()
 

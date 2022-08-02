@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 
 import com.example.sololifeapp.R
 
-class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>(){
+class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context, val keyList: ArrayList<String>) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>(){
 
     // 아이템 클릭 방법 1
 //    interface ItemClick {
@@ -51,7 +51,6 @@ class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context)
         fun bindItem(item: ContentModel){
 
             itemView.setOnClickListener{
-                Toast.makeText(context, item.title, Toast.LENGTH_SHORT).show()
                 val intent = Intent(context, ContentListActivity::class.java)
                 intent.putExtra("url", item.webUrl)
                 itemView.context.startActivity(intent)
@@ -60,6 +59,12 @@ class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context)
 
             val contentTitle = itemView.findViewById<TextView>(R.id.textArea)
             val imageUrl = itemView.findViewById<ImageView>(R.id.imageArea)
+            val bookmarkArea = itemView.findViewById<ImageView>(R.id.bookmarkArea)
+
+            bookmarkArea.setOnClickListener{
+
+                Toast.makeText(context, keyList.toString(), Toast.LENGTH_SHORT).show()
+            }
             contentTitle.text = item.title
 
             Glide.with(context).load(item.imageUrl).into(imageUrl)
