@@ -13,6 +13,12 @@ import com.example.sololifeapp.R
 
 class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>(){
 
+    interface ItemClick {
+        fun onClick(view: View, position: Int)
+    }
+
+    var itemClick: ItemClick? = null
+
     // 각각의 아이템 하나 씩 가져옴 하나의 레이아웃으로 만들어줌
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentRVAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(
@@ -23,6 +29,12 @@ class ContentRVAdapter(val items: ArrayList<ContentModel>, val context: Context)
 
     // 아이템들을 ViewHolder 메서드에서 아이템들을 하나 하나 씩 넣을 수 있게 연결
     override fun onBindViewHolder(holder: ContentRVAdapter.ViewHolder, position: Int) {
+
+        if(itemClick != null) {
+            holder.itemView.setOnClickListener{ v ->
+                itemClick?.onClick(v, position)
+            }
+        }
         holder.bindItem(items[position])
     }
 
