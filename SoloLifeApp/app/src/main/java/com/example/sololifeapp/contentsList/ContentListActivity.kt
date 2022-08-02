@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sololifeapp.R
+import com.example.sololifeapp.utils.FBAuth
 import com.example.sololifeapp.utils.FBRef
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,6 +22,10 @@ class ContentListActivity : AppCompatActivity() {
 
     private lateinit var myRef: DatabaseReference
 
+    private val bookmarkIdList = mutableListOf<String>()
+
+    private lateinit var rvAdapter: ContentRVAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content_list)
@@ -29,7 +34,7 @@ class ContentListActivity : AppCompatActivity() {
         val items = ArrayList<ContentModel>()
         val itemKeyList = ArrayList<String>()
 
-        val rvAdapter = ContentRVAdapter(items, baseContext, itemKeyList)
+        rvAdapter = ContentRVAdapter(items, baseContext, itemKeyList, bookmarkIdList)
 
         val database = Firebase.database
 
@@ -44,8 +49,6 @@ class ContentListActivity : AppCompatActivity() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for(dataModel in dataSnapshot.children) {
-                    Log.d("ContentListActivity", dataModel.toString())
-                    Log.d("ContentListActivity", dataModel.key.toString())
                     val item = dataModel.getValue(ContentModel::class.java) // dataModel 을 ContentModel 형식으로 받겠다는 의미
                     items.add(item!!)
                     itemKeyList.add(dataModel.key.toString())
@@ -88,10 +91,13 @@ class ContentListActivity : AppCompatActivity() {
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                bookmarkIdList.clear()
+
                 for(dataModel in dataSnapshot.children) {
-                    Log.d("로그", dataModel.toString())
-                    Log.d("로그", dataModel.key.toString())
+                    bookmarkIdList.add(dataModel.key.toString())
                 }
+                rvAdapter.notifyDataSetChanged()
+                Log.d("로그", bookmarkIdList.toString())
 
             }
 
@@ -99,11 +105,14 @@ class ContentListActivity : AppCompatActivity() {
 
             }
         }
-        FBRef.bookmarkRef.addValueEventListener(postListener)
+        FBRef.bookmarkRef.child(FBAuth.getUid()).addValueEventListener(postListener)
 
 
     }
 }
+
+
+
 
 
 
