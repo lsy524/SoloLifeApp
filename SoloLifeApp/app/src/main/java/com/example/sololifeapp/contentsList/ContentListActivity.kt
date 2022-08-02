@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sololifeapp.R
+import com.example.sololifeapp.utils.FBRef
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -77,6 +78,28 @@ class ContentListActivity : AppCompatActivity() {
 //            }
 //
 //        }
+
+        getBookmarkData()
+
+
+    }
+
+    private fun getBookmarkData() {
+
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for(dataModel in dataSnapshot.children) {
+                    Log.d("로그", dataModel.toString())
+                    Log.d("로그", dataModel.key.toString())
+                }
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        }
+        FBRef.bookmarkRef.addValueEventListener(postListener)
 
 
     }
