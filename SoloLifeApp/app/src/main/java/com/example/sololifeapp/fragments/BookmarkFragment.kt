@@ -24,7 +24,6 @@ class BookmarkFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bookmark, container, false)
 
 
-
         onClick(binding.homeTap)
         onClick(binding.tipTap)
         onClick(binding.talkTap)

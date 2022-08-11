@@ -49,7 +49,7 @@ class JoinActivity : AppCompatActivity() {
             } else if(password1 != password2) { // 비밀번호가 동일하지 않았을 경우 실행
                 Toast.makeText(this, "비밀번호를 동일하게 입력해주세요.", Toast.LENGTH_SHORT).show()
                 isGoToJoin = false
-            }
+            } 
 
             // 이메일, 비밀번호를 조건에 맞게 입력했을 경우 실행되는 코드
             if(isGoToJoin) {

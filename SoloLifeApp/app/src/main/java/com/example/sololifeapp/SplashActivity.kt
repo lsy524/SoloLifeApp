@@ -19,11 +19,13 @@ class SplashActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+
         // 현재 로그인한 유저의 "uid" 값을 가져옴
         // 만약 가져온 현재 uid 가 null 일 경우 로그인이 되지 않았기 때문에 인트로 화면으로 이동
         if(auth.currentUser?.uid == null) {
             Log.d("SplashActivity", "null")
             // 3초 후에 IntroActivity 로 이동
+
             Handler().postDelayed({
                 startActivity(Intent(this, IntroActivity::class.java))
                 finish()

@@ -61,6 +61,7 @@ class ContentListActivity : AppCompatActivity() {
 
             }
         }
+
         myRef.addValueEventListener(postListener)
 
         val rv: RecyclerView = findViewById(R.id.rv)
