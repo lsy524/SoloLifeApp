@@ -27,17 +27,13 @@ class ContentListActivity : AppCompatActivity() {
 
         val items = ArrayList<ContentModel>() // 데이터를 저장할 리스트 변수
 
-        // 어댑터 생성
-        val rvAdapter = ContentRVAdapter(items, baseContext)
+        val rvAdapter = ContentRVAdapter(items, baseContext) // 어댑터 생성
 
-        // Write a message to the database
-        val database = Firebase.database
+        val database = Firebase.database // 데이터베이스 정의
 
-
-        val getCategory = intent.getStringExtra("category") // tipFragment 에서 받아온 category 를 저장할 변수 생성
-
-        // category 에 따라 myRef Reference 참조 변경
-        when(getCategory) {
+         // category 에 따라 myRef Reference 참조 변경
+        // val getCategory = intent.getStringExtra("category") // tipFragment 에서 받아온 category 를 저장할 변수 생성
+        when(intent.getStringExtra("category")) {
             "category1" -> myRef = database.getReference("contents")
             "category2" -> myRef = database.getReference("contents2")
             "category3" -> myRef = database.getReference("contents3")
@@ -61,7 +57,6 @@ class ContentListActivity : AppCompatActivity() {
                 }
                 rvAdapter.notifyDataSetChanged() // 리사이클러 뷰 전체 업데이트
                  // Log.d("ContentListActivity", items.toString())
-
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
