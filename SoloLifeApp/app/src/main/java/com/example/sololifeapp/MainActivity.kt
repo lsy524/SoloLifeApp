@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.sololifeapp.auth.IntroActivity
 import com.example.sololifeapp.databinding.ActivityMainBinding
-import com.example.sololifeapp.utils.FBAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
