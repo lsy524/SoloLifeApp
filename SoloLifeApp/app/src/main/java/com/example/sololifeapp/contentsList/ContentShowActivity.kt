@@ -3,7 +3,6 @@ package com.example.sololifeapp.contentsList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebView
-import android.widget.Toast
 import com.example.sololifeapp.R
 
 class ContentShowActivity : AppCompatActivity() {
@@ -11,9 +10,10 @@ class ContentShowActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content_show)
 
-        val getUrl = intent.getStringExtra("url")
+        val getUrl = intent.getStringExtra("url") // URL 데이터 받아옴
+
         val webView: WebView = findViewById(R.id.webView)
-        webView.loadUrl(getUrl.toString())
+        webView.loadUrl(getUrl.toString()) // 받오온 getUrl 을 webView 에 load 시켜줌
 
     }
 }
