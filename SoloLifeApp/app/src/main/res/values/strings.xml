@@ -11,9 +11,7 @@
 
     <string name="start_login">로그인 하기</string>
     <string name="start_join">회원가입 하기</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello
-        blank fragment
-    </string>
+
+    <string name="category_title">카테고리 영역</string>
 
 </resources>
