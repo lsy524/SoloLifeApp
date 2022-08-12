@@ -18,10 +18,13 @@ class ContentListActivity : AppCompatActivity() {
         val rv : RecyclerView = findViewById(R.id.rv)
 
         // 샘플 데이터
-        val item = arrayListOf<String>("a","b","c","d")
-
+        val items = ArrayList<ContentModel>()
+        items.add(ContentModel("title1", "imageUrl1"))
+        items.add(ContentModel("title1", "imageUrl2"))
+        items.add(ContentModel("title2", "imageUrl3"))
+        items.add(ContentModel("title3", "imageUrl4"))
         // 어댑터 생성
-        val rvAdapter = ContentRVAdapter(item)
+        val rvAdapter = ContentRVAdapter(items)
 
         // RecyclerView 에 어댑터 연결
         rv.adapter = rvAdapter
