@@ -32,25 +32,54 @@ class TipFragment : Fragment() {
         onClick(binding.storeTap)
         onClick(binding.category1)
         onClick(binding.category2)
+        onClick(binding.category3)
+        onClick(binding.category4)
+        onClick(binding.category5)
+        onClick(binding.category6)
+        onClick(binding.category7)
+        onClick(binding.category8)
 
         return binding.root
     }
 
 
     private fun onClick(v: View) {
+        val intent = Intent(context, ContentListActivity::class.java)
         when(v.id) {
             R.id.homeTap -> binding.homeTap.setOnClickListener{ it.findNavController().navigate(R.id.action_tipFragment_to_homeFragment) }
             R.id.talkTap -> binding.talkTap.setOnClickListener { it.findNavController().navigate(R.id.action_tipFragment_to_talkFragment) }
             R.id.bookmarkTap -> binding.bookmarkTap.setOnClickListener { it.findNavController().navigate(R.id.action_tipFragment_to_bookmarkFragment) }
             R.id.storeTap -> binding.storeTap.setOnClickListener { it.findNavController().navigate(R.id.action_tipFragment_to_storeFragment) }
             R.id.category1 -> binding.category1.setOnClickListener {
-                val intent = Intent(context, ContentListActivity::class.java)
                 intent.putExtra("category", "category1")
                 startActivity(intent)
             }
             R.id.category2 -> binding.category2.setOnClickListener {
-                val intent = Intent(context, ContentListActivity::class.java)
                 intent.putExtra("category", "category2")
+                startActivity(intent)
+            }
+            R.id.category3 -> binding.category3.setOnClickListener {
+                intent.putExtra("category", "category3")
+                startActivity(intent)
+            }
+            R.id.category4 -> binding.category4.setOnClickListener {
+                intent.putExtra("category", "category4")
+                startActivity(intent)
+            }
+            R.id.category5 -> binding.category5.setOnClickListener {
+                intent.putExtra("category", "category5")
+                startActivity(intent)
+            }
+            R.id.category6 -> binding.category6.setOnClickListener {
+                intent.putExtra("category", "category6")
+                startActivity(intent)
+            }
+            R.id.category7 -> binding.category7.setOnClickListener {
+                intent.putExtra("category", "category7")
+                startActivity(intent)
+            }
+            R.id.category8 -> binding.category8.setOnClickListener {
+                intent.putExtra("category", "category8")
                 startActivity(intent)
             }
         }

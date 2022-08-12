@@ -37,12 +37,17 @@ class ContentListActivity : AppCompatActivity() {
         val getCategory = intent.getStringExtra("category") // tipFragment 에서 받아온 category 를 저장할 변수 생성
 
         // category 에 따라 myRef Reference 참조 변경
-        if(getCategory == "category1") {
-            myRef = database.getReference("contents")
-
-        } else if(getCategory == "category2") {
-            myRef = database.getReference("contents2")
+        when(getCategory) {
+            "category1" -> myRef = database.getReference("contents")
+            "category2" -> myRef = database.getReference("contents2")
+            "category3" -> myRef = database.getReference("contents3")
+            "category4" -> myRef = database.getReference("contents4")
+            "category5" -> myRef = database.getReference("contents5")
+            "category6" -> myRef = database.getReference("contents6")
+            "category7" -> myRef = database.getReference("contents7")
+            "category8" -> myRef = database.getReference("contents8")
         }
+
 
 
         // 데이터베이스에서 데이터 읽어오는 코드 
@@ -88,7 +93,6 @@ class ContentListActivity : AppCompatActivity() {
             }
 
         }
-
 
     }
 }
