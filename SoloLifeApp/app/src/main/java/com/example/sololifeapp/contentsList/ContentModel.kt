@@ -1,3 +1,7 @@
 package com.example.sololifeapp.contentsList
 
-data class ContentModel(var title: String = "", var imageUrl: String = "")
+data class ContentModel(
+    var title: String = "",
+    var imageUrl: String = "",
+    var webUrl : String = ""
+)
