@@ -1,15 +1,18 @@
 package com.example.sololifeapp.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sololifeapp.R
 import com.example.sololifeapp.contentsList.ContentModel
+import com.example.sololifeapp.contentsList.ContentShowActivity
 
 class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context : Context) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>() {
 
@@ -48,6 +51,14 @@ class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // activity_contents_list.xml 에 데이터를 하나, 하나 씩 넣어주는 것
         fun bindItems(item : ContentModel) {
+
+            // 리사이클러 뷰 아이템 클릭 방법 2
+            itemView.setOnClickListener {
+                val intent = Intent(context, ContentShowActivity::class.java)
+                intent.putExtra("url",item.webUrl) // 아이템 클릭 시 ContentShowActivity 로 url 을 보냄
+
+                itemView.context.startActivity(intent)
+            }
 
             // itemView = content_rv_item
             val contentTitle = itemView.findViewById<TextView>(R.id.textArea)

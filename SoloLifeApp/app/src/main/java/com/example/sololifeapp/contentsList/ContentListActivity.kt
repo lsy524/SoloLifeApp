@@ -25,6 +25,7 @@ class ContentListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_content_list)
 
+
         val items = ArrayList<ContentModel>() // 데이터를 저장할 리스트 변수
 
         val rvAdapter = ContentRVAdapter(items, baseContext) // 어댑터 생성
