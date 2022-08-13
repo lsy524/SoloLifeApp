@@ -2,6 +2,7 @@ package com.example.sololifeapp.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,10 @@ import com.bumptech.glide.Glide
 import com.example.sololifeapp.R
 import com.example.sololifeapp.contentsList.ContentModel
 import com.example.sololifeapp.contentsList.ContentShowActivity
+import com.example.sololifeapp.util.FBAuth
+import com.example.sololifeapp.util.FBRef
 
-class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context : Context) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>() {
+class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context : Context, val keyList : ArrayList<String>) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>() {
 
     // 리사이클러 뷰 아이템 클릭 방법 1
     // RecyclerView Item Click Event
@@ -42,7 +45,7 @@ class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context :
        }
         */
 
-        holder.bindItems(item[position])
+        holder.bindItems(item[position], keyList[position])
     }
 
     // 전체 아이템의 개수
@@ -50,7 +53,7 @@ class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context :
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         // activity_contents_list.xml 에 데이터를 하나, 하나 씩 넣어주는 것
-        fun bindItems(item : ContentModel) {
+        fun bindItems(item : ContentModel, key : String) {
 
             // 리사이클러 뷰 아이템 클릭 방법 2
             itemView.setOnClickListener {
@@ -66,7 +69,11 @@ class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context :
             val bookmarkArea = itemView.findViewById<ImageView>(R.id.bookmarkArea)
 
             bookmarkArea.setOnClickListener {
-                Toast.makeText(context, "bookmark Click Event", Toast.LENGTH_SHORT).show()
+                Log.d("CurrentUser", FBAuth.getUid())
+                Toast.makeText(context, key, Toast.LENGTH_SHORT).show()
+                
+                // bookmarkRef 에 getUid 를 넣고 getUid 안에 key 값을 넣고 key 값에 value 는 good 이다
+                FBRef.bookmarkRef.child(FBAuth.getUid()).child(key).setValue("Good")
             }
 
             // item = ContentModel

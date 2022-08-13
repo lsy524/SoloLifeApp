@@ -3,6 +3,7 @@ package com.example.sololifeapp.contentsList
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,7 +29,9 @@ class ContentListActivity : AppCompatActivity() {
 
         val items = ArrayList<ContentModel>() // 데이터를 저장할 리스트 변수
 
-        val rvAdapter = ContentRVAdapter(items, baseContext) // 어댑터 생성
+        val itemKeyList = ArrayList<String>() // 데이터의 키 값을 저장할 리스트 변수
+
+        val rvAdapter = ContentRVAdapter(items, baseContext, itemKeyList) // 어댑터 생성
 
         val database = Firebase.database // 데이터베이스 정의
 
@@ -52,8 +55,12 @@ class ContentListActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataModel in dataSnapshot.children) {
                     // Log.d("ContentListActivity", dataModel.toString())
+                    // Log.d("ContentListActivity", dataModel.key.toString()) // 데이터베이스의 항목마다 키 값을 가져옴
                     val item = dataModel.getValue(ContentModel::class.java) // dataModel 에 있는 데이터를 ContentModel 형식으로 받는 다는 의미
                     items.add(item!!) // 데이터베이스에 있는 데이터를 items(데이터를 저장할 리스트 변수)에 추가
+
+                    itemKeyList.add(dataModel.key.toString()) // 데이터 항목마다 키 값을 리스트에 추가
+
 
                 }
                 rvAdapter.notifyDataSetChanged() // 리사이클러 뷰 전체 업데이트
