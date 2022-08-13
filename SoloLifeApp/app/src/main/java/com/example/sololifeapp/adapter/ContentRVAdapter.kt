@@ -63,6 +63,11 @@ class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context :
             // itemView = content_rv_item
             val contentTitle = itemView.findViewById<TextView>(R.id.textArea)
             val imageViewArea = itemView.findViewById<ImageView>(R.id.imageArea)
+            val bookmarkArea = itemView.findViewById<ImageView>(R.id.bookmarkArea)
+
+            bookmarkArea.setOnClickListener {
+                Toast.makeText(context, "bookmark Click Event", Toast.LENGTH_SHORT).show()
+            }
 
             // item = ContentModel
             contentTitle.text = item.title
