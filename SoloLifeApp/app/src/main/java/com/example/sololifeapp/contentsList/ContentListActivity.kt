@@ -54,8 +54,6 @@ class ContentListActivity : AppCompatActivity() {
             "category8" -> myRef = database.getReference("contents8")
         }
 
-
-
         // 데이터베이스에서 데이터 읽어오는 코드 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
