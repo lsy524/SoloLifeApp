@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sololifeapp.R
 import com.example.sololifeapp.adapter.ContentRVAdapter
+import com.example.sololifeapp.util.FBAuth
+import com.example.sololifeapp.util.FBRef
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -20,6 +22,10 @@ import com.google.firebase.ktx.Firebase
 class ContentListActivity : AppCompatActivity() {
 
     private lateinit var myRef : DatabaseReference  // 데이터 참조 변수 생성
+    
+    private val bookmarkIdList = mutableListOf<String>() // 북마크한 아이템에 아이디를 넣을 리스트 생성
+
+    private lateinit var rvAdapter : ContentRVAdapter // 어댑터 생성
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -31,7 +37,7 @@ class ContentListActivity : AppCompatActivity() {
 
         val itemKeyList = ArrayList<String>() // 데이터의 키 값을 저장할 리스트 변수
 
-        val rvAdapter = ContentRVAdapter(items, baseContext, itemKeyList) // 어댑터 생성
+        rvAdapter = ContentRVAdapter(items, baseContext, itemKeyList, bookmarkIdList) // 어댑터로 해당 데이터 보냄
 
         val database = Firebase.database // 데이터베이스 정의
 
@@ -99,6 +105,33 @@ class ContentListActivity : AppCompatActivity() {
 
         }
         */
+
+        getBookmarkData()
+
+    }
+
+    // bookmark ref 데이터 가져오는 코드
+    private fun getBookmarkData() {
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (dataModel in dataSnapshot.children) {
+                    // Log.d("getBookmarkData", dataModel.toString())
+                    // Log.d("getBookmarkData", dataModel.key.toString())
+                    bookmarkIdList.add(dataModel.key.toString())
+
+                }
+                rvAdapter.notifyDataSetChanged()
+                // Log.d("getBookmarkData", bookmarkIdList.toString()) // 북마크리스트에 아이템의 키 값이 추가됬는지 확인 하는 로그캣
+
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        }
+        // bookmarkRef 안에 FBAuth.getUid 안에 값을 key 와 value 형태로 가져오기 위한 코드
+        // key 는 bookmark 를 체크한 item value 는 bookmarkModel 에 boolean 값
+        FBRef.bookmarkRef.child(FBAuth.getUid()).addValueEventListener(postListener)
 
     }
 }

@@ -12,12 +12,17 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sololifeapp.R
+import com.example.sololifeapp.contentsList.BookmarkModel
 import com.example.sololifeapp.contentsList.ContentModel
 import com.example.sololifeapp.contentsList.ContentShowActivity
 import com.example.sololifeapp.util.FBAuth
 import com.example.sololifeapp.util.FBRef
 
-class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context : Context, val keyList : ArrayList<String>) : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>() {
+class ContentRVAdapter(private val item : ArrayList<ContentModel>,
+                       val context : Context,
+                       private val keyList : ArrayList<String>,
+                        private val bookmarkIdList : MutableList<String>)
+    : RecyclerView.Adapter<ContentRVAdapter.ViewHolder>() {
 
     // 리사이클러 뷰 아이템 클릭 방법 1
     // RecyclerView Item Click Event
@@ -31,6 +36,7 @@ class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context :
     // 전체 아이템을 가져와서 아이템 하나씩 하나의 레이아웃(content_rv_item)으로 만들어줌
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : ContentRVAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.content_rv_item, parent, false)
+
         return ViewHolder(v)
     }
     // 아이템들의 내용물들을 inner class ViewHolder 에서 하나, 하나씩 넣을 수 있게 연결을 해주는 역할
@@ -68,12 +74,25 @@ class ContentRVAdapter(private val item : ArrayList<ContentModel>, val context :
             val imageViewArea = itemView.findViewById<ImageView>(R.id.imageArea)
             val bookmarkArea = itemView.findViewById<ImageView>(R.id.bookmarkArea)
 
+            // bookmarkIdList 에 key 값이 포함되어 있는 지 확인하는 코드 
+            if(bookmarkIdList.contains(key)) {
+                bookmarkArea.setImageResource(R.drawable.bookmark_color) // 포함이 되어 있으면 북마크 색 변경
+            } else {
+                bookmarkArea.setImageResource(R.drawable.bookmark_white) // 그렇지 않으면 그래도 흰색
+            }
+
             bookmarkArea.setOnClickListener {
-                Log.d("CurrentUser", FBAuth.getUid())
-                Toast.makeText(context, key, Toast.LENGTH_SHORT).show()
-                
+                // bookmark Icon 클릭 시 데이터베이스에 해당 데이터 저장하는 코드
                 // bookmarkRef 에 getUid 를 넣고 getUid 안에 key 값을 넣고 key 값에 value 는 good 이다
-                FBRef.bookmarkRef.child(FBAuth.getUid()).child(key).setValue("Good")
+                /*  bookmark_list
+                        getUid
+                            key = value
+                */
+                FBRef.bookmarkRef
+                    .child(FBAuth.getUid())
+                    .child(key)
+                    .setValue(BookmarkModel(true))
+
             }
 
             // item = ContentModel
