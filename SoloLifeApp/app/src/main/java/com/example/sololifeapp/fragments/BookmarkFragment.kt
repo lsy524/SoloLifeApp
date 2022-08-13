@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.sololifeapp.R
+import com.example.sololifeapp.adapter.BookmarkRVAdapter
 import com.example.sololifeapp.contentsList.ContentModel
 import com.example.sololifeapp.databinding.FragmentBookmarkBinding
 import com.example.sololifeapp.util.FBAuth
@@ -23,6 +26,12 @@ class BookmarkFragment : Fragment() {
     private lateinit var binding: FragmentBookmarkBinding
 
     private val TAG = BookmarkFragment::class.java.simpleName
+
+    private lateinit var rvAdapter: BookmarkRVAdapter // bookmark Adapter 생성
+
+    private val bookmarkIdList = mutableListOf<String>()
+    private val items = ArrayList<ContentModel>()
+    private val itemKeyList = ArrayList<String>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +51,15 @@ class BookmarkFragment : Fragment() {
         getBookmarkData()
 
         // 3. 전체 컨테츠 중에서, 사용자가 북마크한 정보만 보여줌
+        rvAdapter = BookmarkRVAdapter(items, requireContext(),  itemKeyList, bookmarkIdList)
+
+        val rv : RecyclerView = binding.bookmarkRV
+
+        rv.adapter = rvAdapter
+
+        rv.layoutManager = GridLayoutManager(requireContext(), 2)
+
+
 
 
         onClick(binding.homeTap)
@@ -71,8 +89,12 @@ class BookmarkFragment : Fragment() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataModel in dataSnapshot.children) {
-                    Log.d(TAG, dataModel.toString())
+                    // Log.d(TAG, dataModel.toString())
+                    val item = dataModel.getValue(ContentModel::class.java)
+                    items.add(item!!) // 카테고리에 데이터(항목)들을 items 에 추가
+                    itemKeyList.add(dataModel.key.toString()) // 각 카테고리에 해당하는 키 값을 itemKeyList 에 추가
                 }
+                rvAdapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -89,9 +111,13 @@ class BookmarkFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 for (dataModel in dataSnapshot.children) {
-                    Log.e(TAG, dataModel.toString())
+                    // Log.e(TAG, dataModel.toString())
+                    bookmarkIdList.add(dataModel.key.toString()) // 북마크 데이터에 각 데이터마다 해당하는 키 값을 bookmarkIdList 에 추가
+
                 }
+                rvAdapter.notifyDataSetChanged()
             }
+
 
             override fun onCancelled(databaseError: DatabaseError) {
 
