@@ -77,7 +77,9 @@ class ContentListActivity : AppCompatActivity() {
         // LinearLayoutManager => 기본은 vertical
         rv.layoutManager = GridLayoutManager(this, 2)
 
-        // 리사이클러뷰의 아이템 중 클릭되면 발생하는 코드 
+        // 리사이클러 뷰 아이템 클릭 방법 1
+        /*
+        // 리사이클러뷰의 아이템 중 클릭되면 발생하는 코드
         rvAdapter.itemClick = object : ContentRVAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 Toast.makeText(baseContext, items[position].title, Toast.LENGTH_LONG).show()
@@ -88,6 +90,7 @@ class ContentListActivity : AppCompatActivity() {
             }
 
         }
+        */
 
     }
 }
