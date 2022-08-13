@@ -92,6 +92,7 @@ class ContentRVAdapter(private val item : ArrayList<ContentModel>,
                         .child(key)
                         .removeValue()
 
+
                 } else {
                     //북마크가 없는 경우(북마크 데이터를 데이터베이스에 저장)
                     // bookmark Icon 클릭 시 데이터베이스에 해당 데이터 저장하는 코드

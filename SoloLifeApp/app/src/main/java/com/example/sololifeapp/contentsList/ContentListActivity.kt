@@ -114,6 +114,11 @@ class ContentListActivity : AppCompatActivity() {
     private fun getBookmarkData() {
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                // bookmarkIdList 에 데이터가 이중으로 추가되는 문제 해결
+                // bookmarkIdList 를 불러오기 전에 한번 클리어 시킨다. -> 다시 한번 불러오면 다시 클리어 시키고 데이터 불러옴
+                bookmarkIdList.clear()
+
                 for (dataModel in dataSnapshot.children) {
                     // Log.d("getBookmarkData", dataModel.toString())
                     // Log.d("getBookmarkData", dataModel.key.toString())
