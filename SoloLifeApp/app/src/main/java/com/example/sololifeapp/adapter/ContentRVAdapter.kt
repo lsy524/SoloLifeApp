@@ -74,6 +74,7 @@ class ContentRVAdapter(private val item : ArrayList<ContentModel>,
             val imageViewArea = itemView.findViewById<ImageView>(R.id.imageArea)
             val bookmarkArea = itemView.findViewById<ImageView>(R.id.bookmarkArea)
 
+            // 북마크가 이미지 변경 코드
             // bookmarkIdList 에 key 값이 포함되어 있는 지 확인하는 코드 
             if(bookmarkIdList.contains(key)) {
                 bookmarkArea.setImageResource(R.drawable.bookmark_color) // 포함이 되어 있으면 북마크 색 변경
@@ -82,16 +83,30 @@ class ContentRVAdapter(private val item : ArrayList<ContentModel>,
             }
 
             bookmarkArea.setOnClickListener {
-                // bookmark Icon 클릭 시 데이터베이스에 해당 데이터 저장하는 코드
-                // bookmarkRef 에 getUid 를 넣고 getUid 안에 key 값을 넣고 key 값에 value 는 good 이다
-                /*  bookmark_list
-                        getUid
-                            key = value
-                */
-                FBRef.bookmarkRef
-                    .child(FBAuth.getUid())
-                    .child(key)
-                    .setValue(BookmarkModel(true))
+                // 북마크 추가 및 삭제 코드
+
+                // 북마크가 있을 경우(있을 경우에는 한번 더 클릭 시 삭제 )
+                if(bookmarkIdList.contains(key)) {
+                    FBRef.bookmarkRef
+                        .child(FBAuth.getUid())
+                        .child(key)
+                        .removeValue()
+
+                } else {
+                    //북마크가 없는 경우(북마크 데이터를 데이터베이스에 저장)
+                    // bookmark Icon 클릭 시 데이터베이스에 해당 데이터 저장하는 코드
+                    // bookmarkRef 에 getUid 를 넣고 getUid 안에 key 값을 넣고 key 값에 value 는 good 이다
+                    /*  bookmark_list
+                            getUid
+                                key = value
+                    */
+                    FBRef.bookmarkRef
+                        .child(FBAuth.getUid())
+                        .child(key)
+                        .setValue(BookmarkModel(true))
+
+                }
+
 
             }
 
