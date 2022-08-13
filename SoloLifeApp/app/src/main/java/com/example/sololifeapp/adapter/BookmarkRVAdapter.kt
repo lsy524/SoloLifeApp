@@ -11,11 +11,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sololifeapp.R
-import com.example.sololifeapp.contentsList.BookmarkModel
 import com.example.sololifeapp.contentsList.ContentModel
 import com.example.sololifeapp.contentsList.ContentShowActivity
 import com.example.sololifeapp.util.FBAuth
 import com.example.sololifeapp.util.FBRef
+import java.nio.FloatBuffer
 
 class BookmarkRVAdapter(private val item : ArrayList<ContentModel>,
                        val context : Context,
@@ -63,12 +63,21 @@ class BookmarkRVAdapter(private val item : ArrayList<ContentModel>,
             if(bookmarkIdList.contains(key)) {
                 bookmarkArea.setImageResource(R.drawable.bookmark_color) // 포함이 되어 있으면 북마크 색 변경
             } else {
-                bookmarkArea.setImageResource(R.drawable.bookmark_white) // 그렇지 않으면 그래도 흰색
+                bookmarkArea.setImageResource(R.drawable.bookmark_white)
             }
 
+            bookmarkArea.setOnClickListener {
+                FBRef.bookmarkRef
+                    .child(FBAuth.getUid())
+                    .child(key)
+                    .removeValue()
+            }
 
             // item = ContentModel
             contentTitle.text = item.title
+
+
+            // ImageUrl 을 받아와서 해당 Image 에 webUrl 을 연동
             Glide
                 .with(context)
                 .load(item.imageUrl) // load 에 있는 item.imageUrl 을 into 에 입력한 imageViewArea 에 집어 넣는 다는 의미

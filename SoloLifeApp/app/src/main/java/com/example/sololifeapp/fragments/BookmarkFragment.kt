@@ -45,12 +45,12 @@ class BookmarkFragment : Fragment() {
         // 북마크 탭에 북마크한 데이터만 보여주는 방법 순서
 
         // 1. 전체 카테고리에 있는 컨텐츠 데이터를 다 가져옴
-        getCategoryData()
+        // getBookmarkData() method 안에서 실행
 
         // 2. 사용자가 북마크한 정보를 다 가져옴
         getBookmarkData()
 
-        // 3. 전체 컨테츠 중에서, 사용자가 북마크한 정보만 보여줌
+
         rvAdapter = BookmarkRVAdapter(items, requireContext(),  itemKeyList, bookmarkIdList)
 
         val rv : RecyclerView = binding.bookmarkRV
@@ -77,6 +77,7 @@ class BookmarkFragment : Fragment() {
             R.id.tipTap-> binding.tipTap.setOnClickListener{ it.findNavController().navigate(R.id.action_bookmarkFragment_to_tipFragment) }
             R.id.talkTap -> binding.talkTap.setOnClickListener { it.findNavController().navigate(R.id.action_bookmarkFragment_to_talkFragment) }
             R.id.storeTap -> binding.storeTap.setOnClickListener { it.findNavController().navigate(R.id.action_bookmarkFragment_to_storeFragment) }
+
         }
     }
 
@@ -90,9 +91,15 @@ class BookmarkFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataModel in dataSnapshot.children) {
                     // Log.d(TAG, dataModel.toString())
+
                     val item = dataModel.getValue(ContentModel::class.java)
-                    items.add(item!!) // 카테고리에 데이터(항목)들을 items 에 추가
-                    itemKeyList.add(dataModel.key.toString()) // 각 카테고리에 해당하는 키 값을 itemKeyList 에 추가
+
+                    // 3. 전체 컨테츠 중에서, 사용자가 북마크한 정보만 보여줌
+                    // 카테고리에 키값이 bookmarkIdList 에 포함되어 있다면 item 들을 추가
+                    if(bookmarkIdList.contains(dataModel.key.toString())){
+                        items.add(item!!) // 카테고리에 데이터(항목)들을 items 에 추가
+                        itemKeyList.add(dataModel.key.toString()) // 각 카테고리에 해당하는 키 값을 itemKeyList 에 추가
+                    }
                 }
                 rvAdapter.notifyDataSetChanged()
             }
@@ -103,6 +110,12 @@ class BookmarkFragment : Fragment() {
         }
         FBRef.category1.addValueEventListener(postListener)
         FBRef.category2.addValueEventListener(postListener)
+        FBRef.category3.addValueEventListener(postListener)
+        FBRef.category4.addValueEventListener(postListener)
+        FBRef.category5.addValueEventListener(postListener)
+        FBRef.category6.addValueEventListener(postListener)
+        FBRef.category7.addValueEventListener(postListener)
+        FBRef.category8.addValueEventListener(postListener)
 
     }
 
@@ -115,7 +128,8 @@ class BookmarkFragment : Fragment() {
                     bookmarkIdList.add(dataModel.key.toString()) // 북마크 데이터에 각 데이터마다 해당하는 키 값을 bookmarkIdList 에 추가
 
                 }
-                rvAdapter.notifyDataSetChanged()
+                // 1. 전체 카테고리에 있는 컨텐츠 데이터를 다 가져옴
+                getCategoryData()
             }
 
 

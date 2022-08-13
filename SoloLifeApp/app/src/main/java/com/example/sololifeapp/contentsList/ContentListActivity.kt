@@ -44,14 +44,14 @@ class ContentListActivity : AppCompatActivity() {
          // category 에 따라 myRef Reference 참조 변경
         // val getCategory = intent.getStringExtra("category") // tipFragment 에서 받아온 category 를 저장할 변수 생성
         when(intent.getStringExtra("category")) {
-            "category1" -> myRef = database.getReference("contents")
-            "category2" -> myRef = database.getReference("contents2")
-            "category3" -> myRef = database.getReference("contents3")
-            "category4" -> myRef = database.getReference("contents4")
-            "category5" -> myRef = database.getReference("contents5")
-            "category6" -> myRef = database.getReference("contents6")
-            "category7" -> myRef = database.getReference("contents7")
-            "category8" -> myRef = database.getReference("contents8")
+            "category1" -> myRef = FBRef.category1
+            "category2" -> myRef = FBRef.category2
+            "category3" -> myRef = FBRef.category3
+            "category4" -> myRef = FBRef.category4
+            "category5" -> myRef = FBRef.category5
+            "category6" -> myRef = FBRef.category6
+            "category7" -> myRef = FBRef.category7
+            "category8" -> myRef = FBRef.category8
         }
 
         // 데이터베이스에서 데이터 읽어오는 코드 
