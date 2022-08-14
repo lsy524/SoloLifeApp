@@ -20,7 +20,7 @@ class FBAuth {
         fun getTime() : String {
             val currentDateTime = Calendar.getInstance().time // 현재 시간을 가져와서 currentDateTime 에 할당
             // 현재시간을 년.월.요일 시:분:초 형태로 바꿈
-            val dateFormat = SimpleDateFormat("yyyy.MM.dd H:mm:ss", Locale.KOREAN).format(currentDateTime)
+            val dateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREAN).format(currentDateTime)
 
             return dateFormat
         }
