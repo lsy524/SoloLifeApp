@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.example.sololifeapp.R
+import com.example.sololifeapp.adapter.BoardListLVAdapter
 import com.example.sololifeapp.board.BoardWriteActivity
 import com.example.sololifeapp.databinding.FragmentTalkBinding
+import com.example.sololifeapp.model.BoardModel
 
 
 class TalkFragment : Fragment() {
@@ -30,6 +32,12 @@ class TalkFragment : Fragment() {
         onClick(binding.bookmarkTap)
         onClick(binding.storeTap)
         onClick(binding.writeBtn)
+
+        val boardList = mutableListOf<BoardModel>() // boardModel 데이터를 담을 리스트 정의
+        boardList.add(BoardModel("a", "B","c","d"))
+        val boardRVAdapter = BoardListLVAdapter(boardList) // 어댑터 정의
+        binding.boardListView.adapter = boardRVAdapter // 어댑터를 boardListView 와 연결
+
 
 
         return binding.root

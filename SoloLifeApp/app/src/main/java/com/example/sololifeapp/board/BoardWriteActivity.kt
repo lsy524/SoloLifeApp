@@ -46,6 +46,7 @@ class BoardWriteActivity : AppCompatActivity() {
 
     private fun onClick(v: View) {
         when(v.id) {
+            // 게시글 작성 완료 버튼 클릭 시 발생하는 메서드
             R.id.writeBtn -> binding.writeBtn.setOnClickListener {
                 val title = binding.titleArea.text.toString() // 입력한 글 제목
                 val content = binding.contentArea.text.toString() // 입력한 글 내용
@@ -60,7 +61,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 // 데이터베이스에 데이터 추가 코드
                 FBRef.boardRef
                     .push()
-                    .setValue(BoardModel(title, content, uid, time))
+                    .setValue(BoardModel(title, content, uid, time)) // 제목, 내용, 작성자 uid, 작성 시간
 
                 Toast.makeText(this, "게시글이 작성되었습니다.", Toast.LENGTH_SHORT).show()
 
