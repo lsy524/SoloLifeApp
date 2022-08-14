@@ -85,6 +85,7 @@ class TalkFragment : Fragment() {
 
                 }
                 // Log.d(TAG, boardDataList.toString())
+                boardDataList.reverse()
                 boardRVAdapter.notifyDataSetChanged()
 
             }
