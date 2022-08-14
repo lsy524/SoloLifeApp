@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".board.BoardInsideActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <TextView
+                android:id="@+id/titleArea"
+                style="@style/TextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                tools:text="Text" />
+
+        </LinearLayout>
+
+        <View style="@style/BoardDivider" />
+
+        <TextView
+            android:id="@+id/contentArea"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/background_radius"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            tools:text="Content TextView" />
+
+
+        <TextView
+            android:id="@+id/timeArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:gravity="end"
+            tools:text="Time" />
+    </LinearLayout>
+</layout>

@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.example.sololifeapp.R
 import com.example.sololifeapp.adapter.BoardListLVAdapter
+import com.example.sololifeapp.board.BoardInsideActivity
 import com.example.sololifeapp.board.BoardWriteActivity
 import com.example.sololifeapp.contentsList.ContentModel
 import com.example.sololifeapp.databinding.FragmentTalkBinding
@@ -35,8 +36,6 @@ class TalkFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_talk, container, false)
 
-
-
         onClick(binding.homeTap)
         onClick(binding.tipTap)
         onClick(binding.bookmarkTap)
@@ -46,8 +45,20 @@ class TalkFragment : Fragment() {
         boardRVAdapter = BoardListLVAdapter(boardDataList) // 어댑터 정의
         binding.boardListView.adapter = boardRVAdapter // 어댑터를 boardListView 와 연결
 
-        getFBBoardData()
+        // 게시글 클릭 시 BoardModel(title, content, time)을 다른 액티비티로 보내는 방법
+        // 방법 1. listView 에 있는 데이터 title, content, time 을 다 다른 액티비티로 전달해줘서 만들기
+        binding.boardListView.setOnItemClickListener { parent, view, position, id ->
+            val intent = Intent(requireContext(), BoardInsideActivity::class.java)
+            intent.putExtra("title",boardDataList[position].title)
+            intent.putExtra("content",boardDataList[position].content)
+            intent.putExtra("time",boardDataList[position].time)
+            startActivity(intent)
+        }
 
+
+        // 방법 2. 파이어베이스에 있는 board 에 대한 데이터의 id 를 기반으로 다시 데이터를 받아오는 방법
+
+        getFBBoardData()
 
         return binding.root
     }
