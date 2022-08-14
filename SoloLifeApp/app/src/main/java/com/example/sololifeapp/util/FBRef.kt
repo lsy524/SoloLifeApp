@@ -8,6 +8,7 @@ class FBRef {
     companion object {
         private val database = Firebase.database
 
+        // 카테고리 데이터베이스 필드
         val category1 = database.getReference("contents")
         val category2 = database.getReference("contents2")
         val category3 = database.getReference("contents3")
@@ -17,9 +18,11 @@ class FBRef {
         val category7 = database.getReference("contents7")
         val category8 = database.getReference("contents8")
 
-
-
+        // 북마크 데이터베이스 필드
         val bookmarkRef = database.getReference("bookmark_list")
+
+        // 게시판 데이터베이스 필드
+        val boardRef = database.getReference("board")
 
 
 

@@ -14,4 +14,9 @@
 
     <string name="category_title">카테고리 영역</string>
 
+    <string name="write_page">글쓰기 페이지</string>
+    <string name="write_title">제목을 입력해주세요.</string>
+    <string name="write_content">내용을 입력해주세요.</string>
+    <string name="write_btn">작성하기</string>
+
 </resources>
