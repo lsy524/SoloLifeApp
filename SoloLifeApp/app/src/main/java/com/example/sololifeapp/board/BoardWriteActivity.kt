@@ -28,21 +28,21 @@ class BoardWriteActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_board_write)
 
         // 화면 터치 시 키보드를 숨기는 코드
-        binding.root.setOnTouchListener { _, _ ->
-            hideKeyboard()
-        }
+//        binding.root.setOnTouchListener { _, _ ->
+//            hideKeyboard()
+//        }
 
         onClick(binding.writeBtn)
 
     }
 
     // 키보드를 숨기는 메서드
-    private fun hideKeyboard() : Boolean{
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(this.currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-
-        return false
-    }
+//    private fun hideKeyboard() : Boolean{
+//        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        imm.hideSoftInputFromWindow(this.currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+//
+//        return false
+//    }
 
     private fun onClick(v: View) {
         when(v.id) {
