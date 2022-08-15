@@ -26,6 +26,8 @@ class BoardWriteActivity : AppCompatActivity() {
     private lateinit var binding : ActivityBoardWriteBinding
     private val TAG = BoardWriteActivity::class.java.simpleName
 
+    private var isImageUpload = false
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,8 +65,12 @@ class BoardWriteActivity : AppCompatActivity() {
                 val uid = FBAuth.getUid() // 글을 작성한 사용자 uid
                 val time = FBAuth.getTime() // 글을 작성한 시간
 
-
-
+                /*
+                파이어베이스 스토리지에 이미지를 저장해야 하는데
+                만약에 내가 게시글을 클릭했을 때, 게시글에 대한 정보를 받아와야 하는데
+                이미지 이름에 대한 정보를 모르기 때문에
+                이미지 이름을 문서의 key 값으로 해줘서 이미지에 대한 정보를 찾기 쉽게 해놓음
+                * */
                 // 이미지를 스토리지에 저장 시 해당 게시글에 key 값으로 저장하기 위해사 데이터베이스를 생성하기 전에 미리 key 값을 받아옴
                 val key = FBRef.boardRef.push().key.toString()
 
@@ -78,7 +84,11 @@ class BoardWriteActivity : AppCompatActivity() {
                     .setValue(BoardModel(title, content, uid, time)) // 제목, 내용, 작성자 uid, 작성 시간
 
                 Toast.makeText(this, "게시글이 작성되었습니다.", Toast.LENGTH_SHORT).show()
-                imageUpload(key)
+
+                if(isImageUpload) {
+                    // 키값을 인수로 넣겨줌
+                    imageUpload(key)
+                }
 
                 finish()
             }
@@ -88,6 +98,7 @@ class BoardWriteActivity : AppCompatActivity() {
                 // 갤러리 이동 1-2 버튼 클릭 시 갤러리(사진첩)으로 이동하는 코드
                 val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
                 startActivityForResult(gallery, 100)
+                isImageUpload = true
             }
         }
     }
@@ -109,7 +120,8 @@ class BoardWriteActivity : AppCompatActivity() {
 
         // 경로 설정
         val storageRef = storage.reference
-        val mountainsRef = storageRef.child("$key.png")
+        // 문서의 키값으로 사진을 저장함
+        val imageRef = storageRef.child("$key.png")
         
         // 이미지 업로드
         val imageView = binding.imageArea
@@ -120,7 +132,7 @@ class BoardWriteActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
-        var uploadTask = mountainsRef.putBytes(data)
+        var uploadTask = imageRef.putBytes(data)
         uploadTask.addOnFailureListener {
             // Handle unsuccessful uploads
         }.addOnSuccessListener { taskSnapshot ->

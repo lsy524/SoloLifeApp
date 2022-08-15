@@ -3,15 +3,20 @@ package com.example.sololifeapp.board
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.example.sololifeapp.R
 import com.example.sololifeapp.databinding.ActivityBoardInsideBinding
 import com.example.sololifeapp.model.BoardModel
 import com.example.sololifeapp.util.FBRef
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class BoardInsideActivity : AppCompatActivity() {
 
@@ -40,6 +45,7 @@ class BoardInsideActivity : AppCompatActivity() {
         val key = intent.getStringExtra("key").toString()
 //        Toast.makeText(this, key, Toast.LENGTH_SHORT).show()
         getBoardData(key)
+        getImageData(key)
     }
 
     // 방법 2-5 받은 데이터를 토대로 데이터를 가져옴
@@ -63,5 +69,24 @@ class BoardInsideActivity : AppCompatActivity() {
         }
         // 방법 2-6 board filed 에 key 값을 가리키게 만듬
         FBRef.boardRef.child(key).addValueEventListener(postListener)
+    }
+
+    // 이미지를 다운로드 메서드
+    private fun getImageData(key: String) {
+        
+        // 스토리지에 "$key.png" 값으로 이미지를 가져오겠다는 의미
+        val storageReference = Firebase.storage.reference.child("$key.png")
+
+        val imageViewFromFB = binding.getImageArea
+
+        storageReference.downloadUrl.addOnCompleteListener(OnCompleteListener{ task ->
+            if(task.isSuccessful) {
+                Glide.with(this)
+                    .load(task.result)
+                    .into(imageViewFromFB)
+            } else {
+
+            }
+        })
     }
 }
