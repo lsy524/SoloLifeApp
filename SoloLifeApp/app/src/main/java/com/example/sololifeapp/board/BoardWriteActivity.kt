@@ -3,6 +3,8 @@ package com.example.sololifeapp.board
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,13 +17,14 @@ import com.example.sololifeapp.databinding.ActivityBoardWriteBinding
 import com.example.sololifeapp.model.BoardModel
 import com.example.sololifeapp.util.FBAuth
 import com.example.sololifeapp.util.FBRef
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import java.io.ByteArrayOutputStream
 
 class BoardWriteActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityBoardWriteBinding
-
     private val TAG = BoardWriteActivity::class.java.simpleName
-
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,16 +64,21 @@ class BoardWriteActivity : AppCompatActivity() {
                 val time = FBAuth.getTime() // 글을 작성한 시간
 
 
+
+                // 이미지를 스토리지에 저장 시 해당 게시글에 key 값으로 저장하기 위해사 데이터베이스를 생성하기 전에 미리 key 값을 받아옴
+                val key = FBRef.boardRef.push().key.toString()
+
                 /* board => FBRef.boardRef
                     - key(자동으로 추가되는 고유한 값) => push()
                         - boardModel(title, content, uid, time)
                 * */
                 // 데이터베이스에 데이터 추가 코드
                 FBRef.boardRef
-                    .push()
+                    .child(key)
                     .setValue(BoardModel(title, content, uid, time)) // 제목, 내용, 작성자 uid, 작성 시간
 
                 Toast.makeText(this, "게시글이 작성되었습니다.", Toast.LENGTH_SHORT).show()
+                imageUpload(key)
 
                 finish()
             }
@@ -92,6 +100,32 @@ class BoardWriteActivity : AppCompatActivity() {
 
             // 선택한 사진을 imageArea 에 저장하는 코드
             binding.imageArea.setImageURI(data?.data)
+        }
+    }
+
+    // 이미지 업로드 메서드
+    private fun imageUpload(key: String) {
+        val storage = Firebase.storage
+
+        // 경로 설정
+        val storageRef = storage.reference
+        val mountainsRef = storageRef.child("$key.png")
+        
+        // 이미지 업로드
+        val imageView = binding.imageArea
+        imageView.isDrawingCacheEnabled = true
+        imageView.buildDrawingCache()
+        val bitmap = (imageView.drawable as BitmapDrawable).bitmap
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        var uploadTask = mountainsRef.putBytes(data)
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+        }.addOnSuccessListener { taskSnapshot ->
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            // ...
         }
     }
 
