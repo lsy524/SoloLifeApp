@@ -1,5 +1,6 @@
 package com.example.sololifeapp.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,12 +26,11 @@ class BoardListLVAdapter(private val boardList : MutableList<BoardModel>) : Base
     }
 
     // 뷰를 가져와서 연결해주는 부분
+    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView
+        view = LayoutInflater.from(parent?.context).inflate(R.layout.board_list_item, parent,false)
 
-        if(view == null) {
-            view = LayoutInflater.from(parent?.context).inflate(R.layout.board_list_item, parent,false)
-        }
         val itemLinearLayoutView = view?.findViewById<LinearLayout>(R.id.itemView)
         val title = view?.findViewById<TextView>(R.id.titleArea)
         val content = view?.findViewById<TextView>(R.id.contentArea)
