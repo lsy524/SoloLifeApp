@@ -27,4 +27,13 @@
     
     <string name="write_comment">댓글을 작성해주세요.</string>
 
+    <string name="category_all">전체</string>
+    <string name="category_food">음식</string>
+    <string name="category_economy">절약</string>
+    <string name="category_else">기타</string>
+    <string name="category_hobby">취미</string>
+    <string name="category_interior">가구</string>
+    <string name="category_life">생활</string>
+    <string name="category_oneRoom">원룸</string>
+
 </resources>
