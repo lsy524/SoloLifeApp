@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.sololifeapp.auth.IntroActivity
 import com.example.sololifeapp.databinding.ActivityMainBinding
+import com.example.sololifeapp.setting.SettingActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -22,6 +23,10 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         auth = Firebase.auth
+
+        binding.settingBtn.setOnClickListener {
+            startActivity(Intent(this, SettingActivity::class.java))
+        }
 
 //         Logout
 //        binding.logoutBtn.setOnClickListener {

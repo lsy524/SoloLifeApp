@@ -35,7 +35,6 @@ class HomeFragment : Fragment() {
         onClick(binding.talkTap)
         onClick(binding.bookmarkTap)
         onClick(binding.storeTap)
-        onClick(binding.logoutBtn)
 
 
         return binding.root
@@ -47,12 +46,6 @@ class HomeFragment : Fragment() {
             R.id.talkTap -> binding.talkTap.setOnClickListener { it.findNavController().navigate(R.id.action_homeFragment_to_talkFragment) }
             R.id.bookmarkTap -> binding.bookmarkTap.setOnClickListener { it.findNavController().navigate(R.id.action_homeFragment_to_bookmarkFragment) }
             R.id.storeTap -> binding.storeTap.setOnClickListener { it.findNavController().navigate(R.id.action_homeFragment_to_storeFragment) }
-            R.id.logoutBtn -> binding.logoutBtn.setOnClickListener {
-                auth.signOut()
-                val intent = Intent(context, IntroActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            }
 
         }
     }

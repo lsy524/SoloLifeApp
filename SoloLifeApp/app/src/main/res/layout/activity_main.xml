@@ -23,7 +23,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView android:layout_width="30dp"
+            <ImageView
+                android:id="@+id/settingBtn"
+                android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/main_menu"
                 app:layout_constraintBottom_toBottomOf="parent"
