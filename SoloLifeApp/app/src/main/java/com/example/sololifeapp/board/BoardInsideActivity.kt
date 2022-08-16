@@ -9,11 +9,13 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.example.sololifeapp.R
 import com.example.sololifeapp.databinding.ActivityBoardInsideBinding
 import com.example.sololifeapp.model.BoardModel
+import com.example.sololifeapp.util.FBAuth
 import com.example.sololifeapp.util.FBRef
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DataSnapshot
@@ -74,6 +76,14 @@ class BoardInsideActivity : AppCompatActivity() {
                     binding.titleArea.text = dataModel!!.title
                     binding.contentArea.text = dataModel.content
                     binding.timeArea.text = dataModel.time
+
+                    val myUid = FBAuth.getUid() // 로그인한 사용자 uid
+                    val writerUid = dataModel.uid // 게시글 작성자 uid
+
+                    // 게시글 작성자 uid 와 로그인한 사용자 uid 가 같으면 
+                    if(myUid == writerUid) {
+                        binding.boardSettingIcon.isVisible = true // settingIcon 을 보여줌
+                    }
 
                 }catch (e: Exception) {
                     Log.d(TAG, "삭제 완료")
