@@ -80,10 +80,16 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textSize="18sp"
+                    android:text="댓글 목록"/>
                 <ListView
+                    android:id="@+id/commentLV"
                     android:layout_width="match_parent"
-                    android:layout_height="600dp"
-                    android:background="@color/grey" />
+                    android:layout_height="600dp" />
             </LinearLayout>
         </ScrollView>
         <LinearLayout

@@ -14,6 +14,8 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.example.sololifeapp.R
+import com.example.sololifeapp.adapter.CommentLVAdapter
+import com.example.sololifeapp.comment.CommentModel
 import com.example.sololifeapp.databinding.ActivityBoardInsideBinding
 import com.example.sololifeapp.model.BoardModel
 import com.example.sololifeapp.util.FBAuth
@@ -30,8 +32,9 @@ class BoardInsideActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityBoardInsideBinding
     private val TAG = BoardInsideActivity::class.java.simpleName
-
     private lateinit var key : String
+    private val commentDataList = mutableListOf<CommentModel>()  // 댓글 데이터를 담을 리스트 선언
+    private lateinit var commentLVAdapter: CommentLVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +63,18 @@ class BoardInsideActivity : AppCompatActivity() {
 //        Toast.makeText(this, key, Toast.LENGTH_SHORT).show()
         getBoardData(key)
         getImageData(key)
+
+        // 댓글 입력 버튼 클릭 이벤트
+        binding.commentBtn.setOnClickListener {
+            insertComment(key)
+        }
+
+        // 댓글 어댑터와 연결
+        commentLVAdapter = CommentLVAdapter(commentDataList)
+        binding.commentLV.adapter = commentLVAdapter
+
+        getCommentData(key)
+
     }
 
     // 방법 2-5 받은 데이터를 토대로 데이터를 가져옴
@@ -147,5 +162,44 @@ class BoardInsideActivity : AppCompatActivity() {
             Toast.makeText(this, "게시글이 삭제되었습니다.",Toast.LENGTH_SHORT).show()
             finish() // 현재 게시글 보기 activity 를 종료하는 기능 -> 게시글이 삭제되면 그 게시글 페이지는 사라져야 하기 때문
         }
+    }
+
+    // 댓글 입력 메서드
+    // 댓글 파이어베이스 field 구조
+    // comment                   FBRef.commentRef
+    //  - BoardKey               .child(key)
+    //      - commentKey(자동생성) .push()
+    //          - commentData    .setValue()
+    private fun insertComment(key: String) {
+        FBRef.commentRef
+            .child(key)
+            .push()
+            .setValue(CommentModel(binding.commentArea.text.toString(), FBAuth.getTime()))
+
+        Toast.makeText(this, "댓글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+        binding.commentArea.setText("")
+    }
+
+    // 댓글 데이터 가져오기
+    private fun getCommentData(key: String) {
+        // 데이터베이스에서 댓글 데이터를 가져오는 코드
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                commentDataList.clear()
+                for (dataModel in dataSnapshot.children) {
+                    val item = dataModel.getValue(CommentModel::class.java) // 데이터를 boardModel 형태로 출력
+                    commentDataList.add(item!!)
+
+                }
+                commentDataList.reverse()
+                commentLVAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        }
+        FBRef.commentRef.child(key).addValueEventListener(postListener)
+
     }
 }
