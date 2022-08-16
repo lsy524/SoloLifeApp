@@ -1,5 +1,6 @@
 package com.example.sololifeapp.board
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -121,7 +122,9 @@ class BoardInsideActivity : AppCompatActivity() {
         
         // 수정 버튼 클릭 시 동작하는 코드
         alertDialog.findViewById<Button>(R.id.editBtn)?.setOnClickListener {
-            Toast.makeText(this, "aa",Toast.LENGTH_SHORT).show()
+            var intent = Intent(this, BoardEditActivity::class.java)
+            intent.putExtra("key",key) // 수정할 게시글의 내용을 보여줄 수 있게 intent 로 key 값을 넘겨줌
+            startActivity(intent)
         }
 
         // 삭제 버튼 클릭 시 동작하는 코드
