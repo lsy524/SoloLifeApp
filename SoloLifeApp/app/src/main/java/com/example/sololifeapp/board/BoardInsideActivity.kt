@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -113,6 +114,7 @@ class BoardInsideActivity : AppCompatActivity() {
                     .load(task.result)
                     .into(imageViewFromFB)
             } else {
+                binding.getImageArea.isVisible = false
 
             }
         })
